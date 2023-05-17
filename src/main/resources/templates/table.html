@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Марки авто</title>
+    <link th:href="@{/css/table.css}" rel="stylesheet" >
+</head>
+<body>
+<div>
+    <h2>Сортировка авто по марке</h2>
+    <form method="get" th:action="@{/car-guide/car-mark}" th:object="${carRequest}">
+        <label><input name="sort" type="radio" value="true" th:field="*{asc}"> По возрастанию<br></label>
+
+        <label> <input name="sort" type="radio" value="false" th:field="*{asc}">По убыванию<br></label>
+        <input type="text" name="search" th:field="*{markName}" placeholder="Search..">
+
+        <label><input type="submit" value="ОК"></label>
+    </form>
+</div>
+<table class="styled-table">
+    <thead>
+    <tr>
+        <th>Марка</th>
+        <th>Выбора</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:if="${markList.empty}">
+        <td colspan="2"> Нет автомобилей </td>
+    </tr>
+    <tr th:each="mark : ${markList}">
+        <td><span th:text="${mark.name}"> Макрка авто </span></td>
+        <td>
+            <form class="form" th:action="@{/car-guide/car-model}" th:object="${carRequest}" method='GET'>
+                <input type="hidden" th:value="${mark.id}" th:name="markId" th:id="markId"/>
+
+                <div class="form__cell-6">
+                    <input type="submit" value="Выбрать" class="form__submit-1">
+                </div>
+            </form>
+        </td>
+    </tr>
+    <!-- and so on... -->
+    </tbody>
+</table>
+</body>
+</html>

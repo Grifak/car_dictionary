@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Конфигурации авто</title>
+    <link th:href="@{/css/table.css}" rel="stylesheet" >
+</head>
+<body>
+<form method="get" th:action="@{/car-guide/car-model}" th:object="${carRequest}">
+    <input type="text" th:value="${carRequest.markId}" th:name="markId" th:id="markId"/>
+    <input type="text" th:value="${carRequest.modelId}" th:name="modelId" th:id="modelId"/>
+</form>
+
+<table class="styled-table">
+    <thead>
+    <tr>
+        <th>Тип двигателя</th>
+        <th>Объем двигателя</th>
+        <th>Тип коробки передач</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:if="${carGuideList.empty}">
+        <td colspan="2"> Нет конфигураций </td>
+    </tr>
+    <tr th:each="guide : ${carGuideList}">
+        <td><span th:text="${guide.engineType.getName}">Тип двигателя</span></td>
+        <td><span th:text="${guide.engineVolume}"> Объем двигателя </span></td>
+        <td><span th:text="${guide.transmissionType.getName}">Тип коробки передач</span></td>
+    </tr>
+    <!-- and so on... -->
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Модели авто</title>
+    <link th:href="@{/css/table.css}" rel="stylesheet" >
+</head>
+<body>
+<div>
+    <h2>Сортировка авто по мoдели</h2>
+    <form method="get" th:action="@{/car-guide/car-model}" th:object="${carRequest}">
+        <label><input name="sort" type="radio" value="true" th:field="*{asc}"> По возрастанию<br></label>
+
+        <label> <input name="sort" type="radio" value="false" th:field="*{asc}">По убыванию<br></label>
+        <input type="text" name="search" th:field="*{modelName}" placeholder="Search..">
+        <input type="text" th:value="${carRequest.markId}" th:name="markId" th:id="markId"/>
+
+        <label><input type="submit" value="ОК"></label>
+    </form>
+</div>
+<table class="styled-table">
+    <thead>
+    <tr>
+        <th>Модель</th>
+        <th>Выбора</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:if="${modelList.empty}">
+        <td colspan="2"> Нет автомобилей </td>
+    </tr>
+    <tr th:each="model : ${modelList}">
+        <td><span th:text="${model.name}"> Модель авто </span></td>
+        <td>
+            <form class="form" th:action="@{/car-guide/car-guide}" th:object="${carRequest}" method='GET'>
+                <input type="hidden" th:value="${model.id}" th:name="modelId" th:id="modelId"/>
+                <input type="hidden" th:value="${model.markId}" th:name="markId" th:id="markId"/>
+
+                <div class="form__cell-6">
+                    <input type="submit" value="Выбрать" class="form__submit-1">
+                </div>
+            </form>
+        </td>
+    </tr>
+    <!-- and so on... -->
+    </tbody>
+</table>
+</body>
+</html>
